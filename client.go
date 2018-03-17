@@ -24,7 +24,7 @@ type client struct {
 	debug      bool
 }
 
-// NewClient return a new Bittrex HTTP client
+// NewClient return a new Cryptopia HTTP client
 func NewClient(apiKey, apiSecret string) (c *client) {
 	return &client{apiKey, apiSecret, &http.Client{}, false}
 }
@@ -78,11 +78,11 @@ func (c *client) doTimeoutRequest(timer *time.Timer, req *http.Request) (*http.R
 	case r := <-done:
 		return r.resp, r.err
 	case <-timer.C:
-		return nil, errors.New("timeout on reading data from Bittrex API")
+		return nil, errors.New("timeout on reading data from Cryptopia API")
 	}
 }
 
-// do prepare and process HTTP request to Bittrex API
+// do prepare and process HTTP request to Cryptopia API
 func (c *client) do(method string, resource string, payload string, authNeeded bool) (response []byte, err error) {
 	connectTimer := time.NewTimer(DEFAULT_HTTPCLIENT_TIMEOUT * time.Second)
 
