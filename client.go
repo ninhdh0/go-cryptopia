@@ -1,6 +1,7 @@
 package cryptopia
 
 import (
+	"bytes"
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha256"
@@ -134,5 +135,5 @@ func (c *client) do(method string, resource string, payload string, authNeeded b
 	if resp.StatusCode != 200 {
 		err = errors.New(resp.Status)
 	}
-	return response, err
+	return bytes.TrimPrefix(response, []byte{239, 187, 191}), err
 }
